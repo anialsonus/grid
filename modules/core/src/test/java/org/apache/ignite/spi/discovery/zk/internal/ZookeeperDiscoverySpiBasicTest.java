@@ -221,8 +221,6 @@ public class ZookeeperDiscoverySpiBasicTest extends GridCommonAbstractTest {
     @Override protected void beforeTestsStarted() throws Exception {
         super.beforeTestsStarted();
 
-        IgnitionEx.TEST_ZK = false;
-
         if (USE_TEST_CLUSTER) {
             zkCluster = createTestingCluster(ZK_SRVS);
 
