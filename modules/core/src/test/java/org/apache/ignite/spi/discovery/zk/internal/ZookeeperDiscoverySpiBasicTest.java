@@ -65,6 +65,7 @@ import org.apache.ignite.lang.IgniteInClosure;
 import org.apache.ignite.lang.IgnitePredicate;
 import org.apache.ignite.logger.java.JavaLogger;
 import org.apache.ignite.resources.IgniteInstanceResource;
+import org.apache.ignite.spi.communication.tcp.TcpCommunicationSpi;
 import org.apache.ignite.spi.discovery.DiscoverySpi;
 import org.apache.ignite.spi.discovery.zk.ZookeeperDiscoverySpi;
 import org.apache.ignite.testframework.GridTestUtils;
@@ -1532,6 +1533,21 @@ public class ZookeeperDiscoverySpiBasicTest extends GridCommonAbstractTest {
     }
 
     /**
+     * @throws Exception If failed.
+     */
+    public void _testCommunicationFailure() throws Exception {
+        Ignite srv0 = startGrid(0);
+
+        Ignite srv1 = startGrid(1);
+
+        info("Close communication");
+
+        ((TcpCommunicationSpi)srv1.configuration().getCommunicationSpi()).simulateNodeFailure();
+
+        Thread.sleep(60_000);
+    }
+
+    /**
      * @param clients Clients.
      * @param c Closure to run.
      * @throws Exception If failed.
@@ -1977,7 +1993,7 @@ public class ZookeeperDiscoverySpiBasicTest extends GridCommonAbstractTest {
 
                 ((IgniteDiscoverySpi)client.configuration().getDiscoverySpi()).setInternalListener(lsnr);
 
-                lsnr.startBlock();
+                lsnr.startBlockJoin();
 
                 lsnrs.add(lsnr);
             }
@@ -2038,7 +2054,7 @@ public class ZookeeperDiscoverySpiBasicTest extends GridCommonAbstractTest {
             disconnectedC.run();
 
             for (DiscoverySpiTestListener lsnr : lsnrs)
-                lsnr.stopBlock();
+                lsnr.stopBlockJoin();
         }
 
         waitReconnectEvent(log, reconnectLatch);

@@ -2150,6 +2150,20 @@ public class ZookeeperDiscoveryImpl {
      *
      */
     public void onStop() {
+        // No-op.
+    }
+
+    /**
+     *
+     */
+    public void stop() {
+        stop0(new IgniteSpiException("Node stopped"));
+    }
+
+    /**
+     * @param e Error.
+     */
+    private void stop0(Throwable e) {
         if (!stop.compareAndSet(false, true))
             return;
 
@@ -2161,32 +2175,17 @@ public class ZookeeperDiscoveryImpl {
 
         if (zkClient != null)
             zkClient.onCloseStart();
-    }
 
-    /**
-     * @throws InterruptedException If interrupted.
-     */
-    public void stop() throws InterruptedException {
-        stop0(new IgniteSpiException("Node stopped"));
-    }
-
-    /**
-     * @param e Error.
-     * @throws InterruptedException If interrupted.
-     */
-    private void stop0(Throwable e) throws InterruptedException {
         busyLock.block();
 
         busyLock.unblock();
 
         joinFut.onDone(e);
 
-        IgniteUtils.shutdownNow(ZookeeperDiscoveryImpl.class, utilityPool, log);
-
-        ZookeeperClient zkClient = rtState.zkClient;
-
         if (zkClient != null)
             zkClient.close();
+
+        IgniteUtils.shutdownNow(ZookeeperDiscoveryImpl.class, utilityPool, log);
     }
 
     /**
@@ -2205,16 +2204,9 @@ public class ZookeeperDiscoveryImpl {
         // TODO ZK
         U.error(log, "Fatal error in ZookeeperDiscovery.", err);
 
-        try {
-            onStop();
+        onStop();
 
-            stop0(err);
-        }
-        catch (InterruptedException e) {
-            U.warn(log, "Failed to finish stop procedure, thread was interrupted.");
-
-            Thread.currentThread().interrupt();
-        }
+        stop0(err);
 
         if (err instanceof Error)
             throw (Error)err;
@@ -2228,7 +2220,7 @@ public class ZookeeperDiscoveryImpl {
     private <T> T unmarshalZip(byte[] bytes) throws IgniteCheckedException {
         assert bytes != null && bytes.length > 0;
 
-        return U.unmarshalZip(marsh, bytes, null);
+        return U.unmarshalZip(marsh, bytes, U.resolveClassLoader(spi.ignite().configuration()));
     }
 
     /**
@@ -2519,7 +2511,7 @@ public class ZookeeperDiscoveryImpl {
                 return;
 
             try {
-                assert rc == 0 : rc;
+                assert rc == 0 : KeeperException.Code.get(rc);
 
                 checkIsCoordinator(rc, children);
 
