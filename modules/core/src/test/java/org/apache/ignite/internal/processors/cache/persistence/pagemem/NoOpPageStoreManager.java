@@ -59,6 +59,11 @@ public class NoOpPageStoreManager implements IgnitePageStoreManager {
     }
 
     /** {@inheritDoc} */
+    @Override public void initializeForMetastorage() throws IgniteCheckedException {
+        // No-op.
+    }
+
+    /** {@inheritDoc} */
     @Override public void shutdownForCacheGroup(CacheGroupContext grp, boolean destroy) throws IgniteCheckedException {
         // No-op.
     }
@@ -189,5 +194,10 @@ public class NoOpPageStoreManager implements IgnitePageStoreManager {
     /** {@inheritDoc} */
     @Override public void onDeActivate(GridKernalContext kctx) {
         // No-op.
+    }
+
+    /** {@inheritDoc} */
+    @Override public long pagesAllocated(int grpId) {
+        return 0;
     }
 }

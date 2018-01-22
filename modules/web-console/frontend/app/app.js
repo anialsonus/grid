@@ -92,6 +92,7 @@ import ModelNormalizer from './services/ModelNormalizer.service.js';
 import UnsavedChangesGuard from './services/UnsavedChangesGuard.service';
 import Clusters from './services/Clusters';
 import Caches from './services/Caches';
+import {CSV} from './services/CSV';
 
 import AngularStrapTooltip from './services/AngularStrapTooltip.decorator';
 import AngularStrapSelect from './services/AngularStrapSelect.decorator';
@@ -124,11 +125,15 @@ import pageConfigureAdvanced from './components/page-configure-advanced';
 import pageQueries from './components/page-queries';
 import gridColumnSelector from './components/grid-column-selector';
 import gridItemSelected from './components/grid-item-selected';
+import gridNoData from './components/grid-no-data';
+import gridExport from './components/grid-export';
 import bsSelectMenu from './components/bs-select-menu';
 import protectFromBsSelectRender from './components/protect-from-bs-select-render';
 import uiGridHovering from './components/ui-grid-hovering';
+import uiGridFilters from './components/ui-grid-filters';
 import listEditable from './components/list-editable';
 import clusterSelector from './components/cluster-selector';
+import connectedClusters from './components/connected-clusters';
 
 import igniteServices from './services';
 
@@ -200,13 +205,18 @@ angular.module('ignite-console', [
     pageQueries.name,
     gridColumnSelector.name,
     gridItemSelected.name,
+    gridNoData.name,
+    gridExport.name,
     bsSelectMenu.name,
     uiGridHovering.name,
+    uiGridFilters.name,
     protectFromBsSelectRender.name,
     AngularStrapTooltip.name,
     AngularStrapSelect.name,
     listEditable.name,
     clusterSelector.name,
+    connectedClusters.name,
+    igniteListOfRegisteredUsers.name,
     // Ignite modules.
     IgniteModules.name
 ])
@@ -232,7 +242,6 @@ angular.module('ignite-console', [
 .directive(...igniteRetainSelection)
 .directive('igniteOnFocusOut', igniteOnFocusOut)
 .directive('igniteRestoreInputFocus', igniteRestoreInputFocus)
-.directive('igniteListOfRegisteredUsers', igniteListOfRegisteredUsers)
 .directive('btnIgniteLinkDashedSuccess', btnIgniteLink)
 .directive('btnIgniteLinkDashedSecondary', btnIgniteLink)
 // Services.
@@ -255,6 +264,7 @@ angular.module('ignite-console', [
 .service('IgniteActivitiesUserDialog', IgniteActivitiesUserDialog)
 .service('Clusters', Clusters)
 .service('Caches', Caches)
+.service(CSV.name, CSV)
 // Controllers.
 .controller(...resetPassword)
 .controller(...profile)
@@ -292,7 +302,16 @@ angular.module('ignite-console', [
     $root.gettingStarted = gettingStarted;
 }])
 .run(['$rootScope', 'AgentManager', ($root, agentMgr) => {
-    $root.$on('user', () => agentMgr.connect());
+    let lastUser;
+
+    $root.$on('user', (e, user) => {
+        if (lastUser)
+            return;
+
+        lastUser = user;
+
+        agentMgr.connect();
+    });
 }])
 .run(['$transitions', ($transitions) => {
     $transitions.onSuccess({ }, (trans) => {
