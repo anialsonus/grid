@@ -7,13 +7,13 @@
 # Packages' descriptions
 #
 
-Name:             apache-ignite
+Name:             arenadata-grid
 Version:          2.4.0
-Release:          1%{?dist}
-Summary:          Apache Ignite In-Memory Computing Platform
+Release:          %{buildid}%{?dist}
+Summary:          Arenadata Grid In-Memory Computing Platform
 Group:            Development/System
 License:          ASL 2.0
-URL:              https://ignite.apache.org/
+URL:              https://arenadata.tech/
 Source:           %{name}.zip
 Requires:         java-1.8.0, chkconfig
 Requires(pre):    shadow-utils
@@ -22,7 +22,7 @@ AutoReq:          no
 AutoProv:         no
 BuildArch:        noarch
 %description
-Apache Ignite™ is the in-memory computing platform composed of a strongly
+Arenadata Grid™ is the in-memory computing platform composed of a strongly
 consistent distributed database with powerful SQL, key-value and processing APIs
 
 
@@ -39,7 +39,7 @@ consistent distributed database with powerful SQL, key-value and processing APIs
 #
 # Preinstall scripts
 # $1 can be:
-#     1 - Initial install 
+#     1 - Initial install
 #     2 - Upgrade
 #
 
@@ -140,18 +140,20 @@ esac
 cd $(ls)
 
 # Create base directory structure
-mkdir -p %{buildroot}%{_datadir}/%{name}
-mkdir -p %{buildroot}%{_libdir}/%{name}
-mkdir -p %{buildroot}%{_datadir}/doc/%{name}-%{version}/bin
-mkdir -p %{buildroot}%{_var}/log/%{name}
-mkdir -p %{buildroot}%{_sharedstatedir}/%{name}
-mkdir -p %{buildroot}%{_sysconfdir}/systemd/system
-mkdir -p %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_datadir}/%{name} \
+         %{buildroot}%{_libdir}/%{name} \
+         %{buildroot}%{_datadir}/doc/%{name}-%{version}/bin \
+         %{buildroot}%{_var}/log/%{name} \
+         %{buildroot}%{_sharedstatedir}/%{name} \
+         %{buildroot}%{_sysconfdir}/systemd/system \
+         %{buildroot}%{_sysconfdir}/profile.d \
+         %{buildroot}%{_bindir}
 
 # Copy nessessary files and remove *.bat files
 cp -rf benchmarks bin platforms %{buildroot}%{_datadir}/%{name}
+
 cp -rf docs/* examples %{buildroot}%{_datadir}/doc/%{name}-%{version}
-mv -f %{buildroot}%{_datadir}/%{name}/bin/ignitevisorcmd.sh %{buildroot}%{_datadir}/doc/%{name}-%{version}/bin/
+# mv -f %{buildroot}%{_datadir}/%{name}/bin/ignitevisorcmd.sh %{buildroot}%{_datadir}/doc/%{name}-%{version}/bin/
 find %{buildroot}%{_datadir}/%{name}/ -name *.bat -exec rm -rf {} \;
 
 # Copy libs to /usr/lib and map them to IGNITE_HOME
@@ -161,6 +163,8 @@ ln -sf %{_libdir}/%{name} %{buildroot}%{_datadir}/%{name}/libs
 # Setup configuration
 cp -rf config %{buildroot}%{_sysconfdir}/%{name}
 ln -sf %{_sysconfdir}/%{name} %{buildroot}%{_datadir}/%{name}/config
+
+cp %{_sourcedir}/arenadata-grid.sh $RPM_BUILD_ROOT/%{_sysconfdir}/profile.d/arenadata-grid.sh
 
 # Setup systemctl service
 cp -rf %{_sourcedir}/name.service %{buildroot}%{_sysconfdir}/systemd/system/%{name}@.service
@@ -177,12 +181,19 @@ done
 ln -sf %{_sharedstatedir}/%{name} %{buildroot}%{_datadir}/%{name}/work
 ln -sf %{_var}/log/%{name} %{buildroot}%{_sharedstatedir}/%{name}/log
 
+for script in $(ls %{buildroot}%{_datadir}/%{name}/bin/*.sh | xargs -n 1 basename);
+do
+    ln -s %{_datadir}/%{name}/bin/${script} %{buildroot}%{_datadir}/%{name}/bin/$(echo ${script} | sed s/.sh$//g)
+done
 
 #-------------------------------------------------------------------------------
 #
 # Package file list check
 #
 %files
+
+%attr(0644,root,root)       %{_sysconfdir}/profile.d/arenadata-grid.sh
+
 %dir %{_datadir}/%{name}
 %dir %{_sysconfdir}/%{name}
 %dir %{_sharedstatedir}/%{name}
@@ -200,10 +211,17 @@ ln -sf %{_var}/log/%{name} %{buildroot}%{_sharedstatedir}/%{name}/log
 
 %config(noreplace) %{_sysconfdir}/%{name}/*
 
-%doc %{name}-*/README.txt
-%doc %{name}-*/NOTICE
-%doc %{name}-*/RELEASE_NOTES.txt
-%license %{name}-*/LICENSE
+%doc apache-ignite-*/README.txt
+%doc apache-ignite-*/NOTICE
+%doc apache-ignite-*/RELEASE_NOTES.txt
+%license apache-ignite-*/LICENSE
+
+# %doc %{name}-*/README.txt
+# %doc %{name}-*/NOTICE
+# %doc %{name}-*/RELEASE_NOTES.txt
+# %license %{name}-*/LICENSE
+
+
 
 #-------------------------------------------------------------------------------
 #
