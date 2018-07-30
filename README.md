@@ -12,7 +12,7 @@ For information on how to get started with Apache Ignite, please visit: [Getting
 You can find the full Apache Ignite documentation here: [Full documentation][docs].
 
 
-## What is Apache Ignite?
+## What is Arenadata Grid?
 
 [Apache Ignite][apache-ignite-homepage] is a memory-centric multi-model distributed
  <strong>database</strong>, <strong>caching</strong>, and <strong>processing</strong> platform for
