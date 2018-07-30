@@ -1,17 +1,17 @@
-Apache Ignite Release Notes
+Arenadata Grid Release Notes
 ===========================
 
-Apache Ignite In-Memory Data Fabric 2.4
+Arenadata Grid 2.4
 ---------------------------------------
-Ignite:
+Arenadata Grid:
 * Introduced Baseline Affinity Topology
 * Added ability to convert WAL to human-readable form
 * Added support for uninterruptible writes for WAL and storage
 * Local scan performance was improved up to 2 times in certain use-cases
 
-Apache Ignite In-Memory Data Fabric 2.3
+Arenadata Grid 2.3
 ---------------------------------------
-Ignite:
+Arenadata Grid:
 * Ability to enable persistence per data region.
 * Default page size is changed to 4KB.
 * Ability to enable and disable rebalancing per-node.
@@ -19,7 +19,7 @@ Ignite:
 * Introduced cache start/stop order on cluster activation.
 * EstimatedRebalancingFinishTime and RebalancingStartTime metrics are exposed through MXBean interface.
 * Ability to (de)activate cluster via http-rest API.
-* Added Ignite update notifier.
+* Added Arenadata Grid update notifier.
 * Updated Lucene dependency to version 5.5.2.
 * Added an option to disable MBeans.
 * Added sorted and multithreaded checkpoint modes.
@@ -29,18 +29,18 @@ Ignite:
 * Added write throttling during an ongoing checkpoint to avoid zero performance drops.
 * Ability to convert WAL to human-redable form.
 * Ability to handle CacheObject from DataRecord in standalone WAL iterator.
-* Support for uninterruptable writes using AsyncFileIOFactory; enabled with -DIGNITE_USE_ASYNC_FILE_IO_FACTORY=true.
+* Support for uninterruptable writes using AsyncFileIOFactory; enabled with -DArenadata Grid_USE_ASYNC_FILE_IO_FACTORY=true.
 * Enhanced persistent store path resolving to not rely on automatically generated consistent ID.
-* Pre-configure local event listeners with IgniteConfiguration.LocalEventListeners.
+* Pre-configure local event listeners with Arenadata GridConfiguration.LocalEventListeners.
 * Massive performance and stability improvements.
 
-Ignite.NET:
+Arenadata Grid.NET:
 * LINQ: Local collections joins support.
 * LINQ: Regex support.
 
-Ignite CPP:
+Arenadata Grid CPP:
 * Added Compute::Broadcast method.
-* Added Ignite::SetActive method.
+* Added Arenadata Grid::SetActive method.
 
 SQL:
 * Added sqlline utility to the build.
@@ -68,7 +68,7 @@ JDBC Driver:
 * Thin driver: Added type conversions in accordance with specification.
 * Thin driver: Added schema to connection string.
 * Thin driver: Added Statement.closeOnCompletion() support.
-* Appended UUID to thick driver's Ignite instance name to avoid collision with user-created instances.
+* Appended UUID to thick driver's Arenadata Grid instance name to avoid collision with user-created instances.
 * Fixed a bug in PreparedStatement not clearing query parameters after execution.
 
 ODBC Driver:
@@ -107,22 +107,22 @@ Visor:
 * Added missing configuration properties to "config" command.
 * Fixed script execution after alert throttling interval.
 
-Apache Ignite In-Memory Data Fabric 2.2
+Arenadata Grid In-Memory Data Fabric 2.2
 ---------------------------------------
-Ignite:
+Arenadata Grid:
 * Checkpointing algorithm optimized
 * Default max memory size changed from 80% to 20%
 
-Ignite CPP:
+Arenadata Grid CPP:
 * Now possible to start node with persistent store
-* Ignite.setActive method added to C++ API
+* Arenadata Grid.setActive method added to C++ API
 
-Apache Ignite In-Memory Data Fabric 2.1
+Arenadata Grid In-Memory Data Fabric 2.1
 ---------------------------------------
-Ignite:
+Arenadata Grid:
 * Persistent cache store
-* Added IgniteFuture.listenAsync() and IgniteFuture.chainAsync() mehtods
-* Deprecated IgniteConfiguration.marshaller
+* Added Arenadata GridFuture.listenAsync() and Arenadata GridFuture.chainAsync() mehtods
+* Deprecated Arenadata GridConfiguration.marshaller
 * Updated Lucene dependency to version 5.5.2
 * Machine learning: implemented K-means clusterization algorithm optimized for distributed storages
 * SQL: CREATE TABLE and DROP TABLE commands support
@@ -135,14 +135,14 @@ Ignite:
 * ODBC: Implemented DML statement batching
 * Massive performance and stability improvements
 
-Ignite.NET:
+Arenadata Grid.NET:
 * Automatic remote assembly loading
 * NuGet-based standalone node deployment
 * Added conditional data removeal via LINQ DeleteAll
 * Added TimestampAttribute to control DateTime serialization mode
 * Added local collections joins support to LINQ.
 
-Ignite CPP:
+Arenadata Grid CPP:
 * Added Compute::Call and Compute::Broadcast methods
 
 Web Console:
@@ -150,9 +150,9 @@ Web Console:
 * Added option to show full stack trace on Queries screen
 * Added PK alias generation on Models screen.
 
-Apache Ignite In-Memory Data Fabric 2.0
+Arenadata Grid In-Memory Data Fabric 2.0
 ---------------------------------------
-Ignite:
+Arenadata Grid:
 * Introduced new page memory architecture
 * Machine Learning beta: distributed algebra support for dense and sparse data sets
 * Reworked and simplified API for asynchronous operations
@@ -171,13 +171,13 @@ Ignite:
 * ODBC: Added Time data type support
 * Massive performance improvements
 
-Ignite.NET:
+Arenadata Grid.NET:
 * Custom plugin API
 * Generic cache store
 * Binary types now can be registered dynamically
 * LINQ: join, "contains" and DateTime property support
 
-Ignite CPP:
+Arenadata Grid CPP:
 * Implemented Cache::Invoke
 * Added remote filters support to continuous queries
 
@@ -186,29 +186,29 @@ Web Console:
 * Possibility to configure Kubernetes IP finder
 * EnforceJoinOrder option on Queries screen
 
-Apache Ignite In-Memory Data Fabric 1.9
+Arenadata Grid In-Memory Data Fabric 1.9
 ---------------------------------------
-Ignite:
+Arenadata Grid:
 * Added Data streamer mode for DML
-* Added Discovery SPI Implementation for Ignite Kubernetes Pods
+* Added Discovery SPI Implementation for Arenadata Grid Kubernetes Pods
 * SQL: Query can utilize multiple threads
 * SQL: Improved distributed SQL support
 * Benchmarking simplified and automated
 * Fixed licenses generation during build
-* ignite-spark module upgraded to Spark 2.0
+* Arenadata Grid-spark module upgraded to Spark 2.0
 
-Ignite.NET:
+Arenadata Grid.NET:
 * DML support
-* TransactionScope API for Ignite transactions support
+* TransactionScope API for Arenadata Grid transactions support
 
-Ignite CPP:
+Arenadata Grid CPP:
 * DML support
 * Implemented LoadCache
 * ContinuousQuery support
 
-Apache Ignite In-Memory Data Fabric 1.8
+Arenadata Grid In-Memory Data Fabric 1.8
 ---------------------------------------
-Ignite:
+Arenadata Grid:
 * SQL: Added DML operations support (INSERT, UPDATE, DELETE, MERGE)
 * SQL: Improved DISTINCT keyword handling in aggregates
 * Hadoop: Added MapR distribution support
@@ -217,7 +217,7 @@ Ignite:
 * Added transactions deadlock detection
 * Many stability and fault-tolerance fixes
 
-Ignite.NET:
+Arenadata Grid.NET:
 * ASP.NET session state store provider
 * Entity Framework second level cache
 * Custom loggers support: NLog, Apache log4Net
@@ -228,9 +228,9 @@ ODBC driver:
 * Added DSN support
 * Performance improvements
 
-Apache Ignite In-Memory Data Fabric 1.7
+Arenadata Grid In-Memory Data Fabric 1.7
 ---------------------------------------
-Ignite:
+Arenadata Grid:
 * Added distributed SQL JOIN.
 * Node can be assigned as primary only after preloading is finished.
 * Fixed CountDownLatch re-create issue.
@@ -238,18 +238,18 @@ Ignite:
 * Visor: Fixed data nodes calculation when node filter is set for cache.
 * Many stability and fault-tolerance fixes.
 
-Ignite.NET:
+Arenadata Grid.NET:
 * Added ASP.NET Output Cache provider.
-* Added ability to use .NET configuration in Apache.Ignite.exe.
+* Added ability to use .NET configuration in Apache.Arenadata Grid.exe.
 * Added ability to implement custom affinity functions.
 * Fixed a bug in IBinaryObjectBuilder causing type name to be lost.
 
-Ignite CPP:
+Arenadata Grid CPP:
 * Marshalling performance improvements.
 
-Apache Ignite In-Memory Data Fabric 1.6
+Arenadata Grid In-Memory Data Fabric 1.6
 ---------------------------------------
-Ignite .NET:
+Arenadata Grid .NET:
 * Added LINQ Provider for cache SQL queries
 * Added native configuration mechanism (C#, app.config, web.config - instead of Spring XML)
 * Added NuGet distribution
@@ -260,28 +260,28 @@ Ignite .NET:
 * Added automatic Java detection: no need for JAVA_HOME
 * Added ability to use Java-based remote filters in continuous queries.
 
-Ignite C++:
+Arenadata Grid C++:
 * Added Transactions API for C++ client.
 * Added Date and Timestamp types implementation for C++ client.
 * Simplified Autotools build process for C++ client.
 
-Ignite:
+Arenadata Grid:
 * Added ability to get partition 'updateCntr' with continuous query public API.
 * Added asynchronous execution of ContinuousQuery's remote filter and local listener.
 * Added backup partitions storing to local store default behavior.
 * Added cache deadlock detection.
 * Added Cache Store implementation backed by Cassandra DB.
 * Added method to get versioned cache entry.
-* Added ODBC driver for Ignite.
+* Added ODBC driver for Arenadata Grid.
 * Added support for join timeout while registering local addresses with IP finder in TcpDiscoverySpi.
 * Added support for JTA transactions via synchronization callback.
-* Added Web Console for Ignite.
+* Added Web Console for Arenadata Grid.
 * Fixed a bug causing object deserialization when local store is configured for cache.
 * Fixed a problem with incorrect classloader picked in OSGI environment.
 * Fixed a race condition when evicted offheap data was not delivered to query engine leading to query timeout.
 * Fixed an issue in ContinuousQueries that caused missing of notifications.
 * Fixed background cache partition map exchange not to flood network.
-* Fixed BinaryContext to honor custom loader set through IgniteConfiguration.
+* Fixed BinaryContext to honor custom loader set through Arenadata GridConfiguration.
 * Fixed BinaryObjectOffHeapImpl leak to public code.
 * Fixed cluster stability with 500+ clients.
 * Fixed continuous queries to send filter factory instead of filter.
@@ -291,13 +291,13 @@ Ignite:
 * Fixed discovery and node start procedure issues that may cause slowdowns during larger topologies start (>100 nodes).
 * Fixed eviction policy notification if swap or off heap is enabled and an entry is not loaded during preloading.
 * Fixed excessive thread stack usage in case of high contention on cache entries.
-* Fixed execution of Splunk MapReduce jobs on top of Ignite MR.
+* Fixed execution of Splunk MapReduce jobs on top of Arenadata Grid MR.
 * Fixed GridClosureProcessor internal closures to be deserialized by BinaryMarshaller.
 * Fixed issue with AWS dependencies.
 * Fixed java proxies deserialization with optimized marshaller.
 * Fixed local store behavior at cross cache transactions.
 * Fixed marshalling of Java collection and maps for BinaryMarshaller.
-* Fixed memory leak in IgniteH2Indexing.
+* Fixed memory leak in Arenadata GridH2Indexing.
 * Fixed NPE during rebalancing.
 * Fixed NPE in GridMergeIndex.
 * Fixed OOME when OFFHEAP_TIERED mode is used.
@@ -317,35 +317,35 @@ Ignite:
 * Fixed value copying in entry processor with OptimizedMarshaller.
 * Fixed web session clustering with WebLogic.
 * Hadoop: fixed a bug causing exception during MR planning when input split file doesn't exist.
-* IGFS: Added configuration flag to disable default path modes under "/ignite" folder.
+* IGFS: Added configuration flag to disable default path modes under "/Arenadata Grid" folder.
 * IGFS: Added pluggable factory interface for Hadoop FileSystem creation.
 * IGFS: Fixed file properties when running over secondary file system.
 * IGFS: Fixed issues with Kerberized HDFS.
 * IGFS: Massive performance and stability fixes.
 * Improved marshaller behavior during cluster topology change.
-* Mesos integration: added possibility to load Ignite package from file system.
+* Mesos integration: added possibility to load Arenadata Grid package from file system.
 * Optimized cache 'get' operations on affinity node.
 * Optimized memory usage on server nodes to allow more client connections.
 * Passed update notifier flag to discovery data to be sure that all cluster nodes have the same notifier status as the first node.
 * Performance optimization for transactions that do not acquire locks.
 * ScanQueries over local partitions performance optimisation.
-* Support of package-private implementations for Ignite Services.
-* Supported Ignite Compute tasks cancellation for Ignite.NET.
+* Support of package-private implementations for Arenadata Grid Services.
+* Supported Arenadata Grid Compute tasks cancellation for Arenadata Grid.NET.
 * Visor CMD: Added ability to attach custom scripts to alerts.
 * Web sessions: minor fix to prevent NullPointerException in some special case.
 * Web sessions: user session classes are no longer needed on server nodes.
 * A lot of stability and fault-tolerance fixes.
 
-Apache Ignite In-Memory Data Fabric 1.5
+Arenadata Grid In-Memory Data Fabric 1.5
 ---------------------------------------
-* Ignite.NET: Initial Release.
-* Ignite C++: Initial Release.
+* Arenadata Grid.NET: Initial Release.
+* Arenadata Grid C++: Initial Release.
 * Massive performance improvements for cache operations and SQL.
 * Added new binary cache object marshalling implementation.
-* Added IgniteSemaphore data structure.
+* Added Arenadata GridSemaphore data structure.
 * Added MQTT Streamer.
 * Added Twitter Streamer.
-* Added Ignite Sink (integration with Apache Flume).
+* Added Arenadata Grid Sink (integration with Apache Flume).
 * Added Apache Camel Streamer.
 * Added OSGi support.
 * Fixed optimistic serializable transactions: implemented "deadlock-free" locking algorithm.
@@ -357,9 +357,9 @@ Apache Ignite In-Memory Data Fabric 1.5
 * Many stability and fault-tolerance fixes.
 * Added example to demonstrate the usage of EntryProcessor.
 
-Complete list of closed issues: https://issues.apache.org/jira/issues/?jql=project%20%3D%20IGNITE%20AND%20fixVersion%20%3D%201.5%20AND%20status%20%3D%20closed
+Complete list of closed issues: https://issues.apache.org/jira/issues/?jql=project%20%3D%20Arenadata Grid%20AND%20fixVersion%20%3D%201.5%20AND%20status%20%3D%20closed
 
-Apache Ignite In-Memory Data Fabric 1.4
+Arenadata Grid In-Memory Data Fabric 1.4
 ---------------------------------------
 * Added SSL support to communication and discovery.
 * Added support for log4j2.
@@ -367,7 +367,7 @@ Apache Ignite In-Memory Data Fabric 1.4
 * Added client node based JDBC driver implementation.
 * Fixed consistency issue for custom events processing within discovery.
 * Fixed race in cache swap/unswap logic.
-* Fixed IGNITE_HOME resolution with JBoss.
+* Fixed Arenadata Grid_HOME resolution with JBoss.
 * Fixed configuration file resolution on classpath.
 * Fixed MBean registration for caches.
 * Fixed near cache evictions with offheap.
@@ -377,7 +377,7 @@ Apache Ignite In-Memory Data Fabric 1.4
 * Fixed affinity routing in compute grid.
 * Many stability and fault-tolerance fixes.
 
-Apache Ignite In-Memory Data Fabric 1.3
+Arenadata Grid In-Memory Data Fabric 1.3
 ---------------------------------------
 
 * Added auto-retries for cache operations in recoverable cases.
@@ -391,25 +391,25 @@ Apache Ignite In-Memory Data Fabric 1.3
 * Bug fixes in In-Memory Accelerator For Apache Hadoop.
 * Many stability and fault-tolerance fixes.
 
-Apache Ignite In-Memory Data Fabric 1.2
+Arenadata Grid In-Memory Data Fabric 1.2
 ---------------------------------------
 
 * Added client mode to TCP discovery SPI.
 * Added memory based evictions.
 * Added integration with Apache Spark.
 * Added integration with Apache Mesos.
-* Added IgniteCache.getAllOutTx() method.
+* Added Arenadata GridCache.getAllOutTx() method.
 * Added serializable cache store factories for built-in stores.
 * Bug fixes in In-Memory Accelerator For Apache Hadoop.
 * Many stability and fault-tolerance fixes.
 
-Apache Ignite In-Memory Data Fabric 1.1
+Arenadata Grid In-Memory Data Fabric 1.1
 ---------------------------------------
 
 * Added Google Compute Engine TCP discovery IP finder.
 * Added generic cloud TCP discovery IP finder (based on jclouds).
 * Added SortedEvictionPolicy.
-* Added chaining for IgniteConfiguration and CacheConfiguration setters.
+* Added chaining for Arenadata GridConfiguration and CacheConfiguration setters.
 * Added AffinityUuid class for easier generation of unique collocated keys.
 * Added support for cache configuration templates.
 * Added support for (*) star notation in cache names.
@@ -423,15 +423,15 @@ Apache Ignite In-Memory Data Fabric 1.1
 * Made deployment scanners for URI-based deployment pluggable.
 * Many stability and fault-tolerance fixes.
 
-Apache Ignite In-Memory Data Fabric 1.0
+Arenadata Grid In-Memory Data Fabric 1.0
 ---------------------------------------
 
 * Simplified query API.
 * Added automatic aggregation, grouping, and sorting support to SQL queries.
 * Added dynamic caches, i.e. ability to start and stop caches during runtime.
-* Changed IgniteDataLoader to IgniteDataStreamer.
+* Changed Arenadata GridDataLoader to Arenadata GridDataStreamer.
 * Added automatic transformation support to streaming.
-* Removed old streaming APIs in favor of new IgniteDataStreamer.
+* Removed old streaming APIs in favor of new Arenadata GridDataStreamer.
 * Added many examples using Java8 lambdas and streams.
 * Added new streaming examples based on new streaming and SQL querying APIs.
 * Added automatic schema-import demo under examples.
@@ -439,19 +439,19 @@ Apache Ignite In-Memory Data Fabric 1.0
 * Added ability to automatically exclude LGPL optional dependencies during build.
 
 
-Apache Ignite In-Memory Data Fabric 1.0 RC3
+Arenadata Grid In-Memory Data Fabric 1.0 RC3
 -------------------------------------------
 
-This is the first release of Apache Ignite project. The source code in large part is based
+This is the first release of Arenadata Grid project. The source code in large part is based
 on the 7 year old GridGain In-Memory Data Fabric, open source edition, v. 6.6.2, which was
 donated to Apache Software Foundation in September 2014.
 
-The main feature set of Ignite In-Memory Data Fabric includes:
+The main feature set of Arenadata Grid In-Memory Data Fabric includes:
 * Advanced Clustering
 * Compute Grid
 * Data Grid
 * Service Grid
-* IGFS - Ignite File System
+* IGFS - Arenadata Grid File System
 * Distributed Data Structures
 * Distributed Messaging
 * Distributed Events
