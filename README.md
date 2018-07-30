@@ -1,7 +1,5 @@
 # Arenadata Grid
 
-<a href="https://ignite.apache.org/"><img src="https://ignite.apache.org/images/logo3.png" hspace="20"/></a>
-
 <a href="https://ci.ignite.apache.org/viewType.html?buildTypeId=Ignite20Tests_RunAll&branch_Ignite20Tests=%3Cdefault%3E"><img src="http://ci.ignite.apache.org/app/rest/builds/buildType:(id:Ignite20Tests_RunAll)/statusIcon.svg"/></a>
 
 
