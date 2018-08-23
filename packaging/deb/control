@@ -1,15 +1,15 @@
-Source: apache-ignite
+Source: arenadata-grid
 Maintainer: Petr Ivanov <mr.weider@gmail.com>
 Section: misc
 Priority: optional
 Standards-Version: 4.1.1.1
 
-Package: apache-ignite
+Package: arenadata-grid
 Architecture: all
 Section: misc
 Priority: optional
 Depends: openjdk-8-jdk | oracle-java8-installer, systemd, passwd
-Description: Apache Ignite In-Memory Computing, Database and Caching Platform
+Description: Arenadata Grid  In-Memory Computing, Database and Caching Platform
  Ignite™ is a memory-centric distributed database, caching, and processing
  platform for transactional, analytical, and streaming workloads, delivering
  in-memory speeds at petabyte scale

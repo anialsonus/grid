@@ -1,5 +1,5 @@
 [Unit]
-Description=Apache Ignite In-Memory Computing Platform Service
+Description=Arenadate Gride In-Memory Computing Platform Service
 After=syslog.target network.target
 
 [Service]

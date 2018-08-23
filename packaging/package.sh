@@ -12,7 +12,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"    # Run from the script's root
 ##############
 #  SETTINGS  #
 ##############
-APT_YUM_Y=                   # Install with no user interaction option for apt | yum
+APT_YUM_Y=-y                   # Install with no user interaction option for apt | yum
 BIN_NAME=                    # Name of binary archive used as a source for package building
 IGNITE_VERSION=              # Main product version
 PACKAGING_DIR=               # Root directory of packaging script
@@ -54,7 +54,7 @@ EOF
 # Check and prepare build environment
 prepEnv () {
     installCmd=""
-    packages="unzip curl alien gcc"
+    packages="unzip curl alien gcc fakeroot"
     executables="rpmbuild unzip curl alien gcc"
 
     # Check OS
@@ -94,18 +94,19 @@ prepEnv () {
 # Check that binary archive exists and try to download it from Apache Dist Archive is not
 getBin () {
     set -x
-    IGNITE_VERSION=$(cat rpm/apache-ignite.spec | grep Version: | head -1 | sed -r 's|.*:\s+(.*)|\1|')
+    IGNITE_VERSION=$(cat rpm/arenadata-grid.spec | grep Version: | head -1 | sed -r 's|.*:\s+(.*)|\1|')
     BIN_NAME="apache-ignite-fabric-${IGNITE_VERSION}-bin.zip"
+    ARENA_BIN_NAME="arenadata-grid.zip"
     binPreparedFlag=false
 
     # Search binary in packaging root directory 
-    if [ -f "${BIN_NAME}" ]; then
+    if [ -f "${ARENA_BIN_NAME}" ]; then
         binPreparedFlag=true
     fi
 
     # Get from target
     if ! ${binPreparedFlag}; then
-        if $(cp -rf ../target/bin/${BIN_NAME} ./ &>/dev/null); then
+        if $(cp -rf ../target/bin/${ARENA_BIN_NAME} ./ &>/dev/null); then
             binPreparedFlag=true
         fi
     fi
@@ -113,15 +114,16 @@ getBin () {
     # Get from Apache Dist
     if ! ${binPreparedFlag}; then
         if $(curl --fail -O https://archive.apache.org/dist/ignite/${IGNITE_VERSION}/${BIN_NAME} &>/dev/null); then
+            mv ${BIN_NAME} ${ARENA_BIN_NAME}
             binPreparedFlag=true
         else
-           rm -rf ${BIN_NAME} 
+           rm -rf ${ARENA_BIN_NAME} 
         fi
     fi
 
     # Fail if none of the above acquiring method succeeded
     if ! ${binPreparedFlag}; then
-        echo "[ERROR] Can't find Apache Ignite's binary archive '${BIN_NAME}'"
+        echo "[ERROR] Can't find Apache Ignite's binary archive '${ARENA_BIN_NAME}'"
         exit 1
     fi
 }
@@ -134,11 +136,11 @@ buildRPM () {
 
     # Prepare build layout
     mkdir -pv ${RPM_WORK_DIR}/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-    cp -rfv ${BIN_NAME} rpm/{name.service,service.sh} ${RPM_WORK_DIR}/SOURCES
-    cp -rfv rpm/apache-ignite.spec ${RPM_WORK_DIR}/SPECS
+    cp -rfv ${ARENA_BIN_NAME} rpm/{name.service,service.sh,arenadata-grid.sh} ${RPM_WORK_DIR}/SOURCES
+    cp -rfv rpm/arenadata-grid.spec ${RPM_WORK_DIR}/SPECS
 
     # Assemble RPM packages
-    rpmbuild -bb -v --define "_topdir ${RPM_WORK_DIR}" ${RPM_WORK_DIR}/SPECS/apache-ignite.spec
+    rpmbuild -bb -v --define "_topdir ${RPM_WORK_DIR}" ${RPM_WORK_DIR}/SPECS/arenadata-grid.spec
 
     # Gather RPMS
     find ${RPM_WORK_DIR} -name "*.rpm" -exec mv -fv {} ${PACKAGING_DIR} \;
@@ -152,23 +154,23 @@ buildDEB () {
 
     # Check that RPMs for building exists
     packageVersion="$(cat deb/changelog | head -1 | sed -r 's|.*\((.*)\).*|\1|')"
-    if [ ! -f "apache-ignite-${packageVersion}.noarch.rpm" ]; then
+    if [ ! -f "arenadata-grid-${packageVersion}.noarch.rpm" ]; then
         echo "[ERROR] RPM for converting to DEB not found"
         exit 1
     fi
 
     # Unpack RPMs and prepare DEBs build layout
     cd ${DEB_WORK_DIR}
-    cp -rfv ${PACKAGING_DIR}/apache-ignite-${packageVersion}.noarch.rpm ${DEB_WORK_DIR}
-    alien --scripts --verbose --keep-version --single apache-ignite-${packageVersion}.noarch.rpm
+    cp -rfv ${PACKAGING_DIR}/arenadata-grid-${packageVersion}.noarch.rpm ${DEB_WORK_DIR}
+    alien --scripts --verbose --keep-version --single arenadata-grid-${packageVersion}.noarch.rpm
 
     # Copy custom DEBs control files and make some modifications on the fly
     buildDirVersion="$(echo ${packageVersion} | cut -f1 -d-)"
-    cp -rfv ${PACKAGING_DIR}/deb/{changelog,control,copyright,rules} ${DEB_WORK_DIR}/apache-ignite-${buildDirVersion}/debian
-    sed -i -r -e 's|/usr/bin/mkdir|/bin/mkdir|' -e 's|/usr/bin/chown|/bin/chown|' ${DEB_WORK_DIR}/apache-ignite-${buildDirVersion}/etc/systemd/system/apache-ignite@.service
+    cp -rfv ${PACKAGING_DIR}/deb/{changelog,control,copyright,rules} ${DEB_WORK_DIR}/arenadata-grid-${buildDirVersion}/debian
+    sed -i -r -e 's|/usr/bin/mkdir|/bin/mkdir|' -e 's|/usr/bin/chown|/bin/chown|' ${DEB_WORK_DIR}/arenadata-grid-${buildDirVersion}/etc/systemd/system/arenadata-grid@.service
 
     # Assemble DEB packages
-    cd ${DEB_WORK_DIR}/apache-ignite-${buildDirVersion}
+    cd ${DEB_WORK_DIR}/arenadata-grid-${buildDirVersion}
     fakeroot debian/rules binary
 
     # Gather DEBs
@@ -180,7 +182,7 @@ buildDEB () {
 processTrap () {
     # Removing temporary files
     echo "Removing temporary work directories: ${DEB_WORK_DIR} ${RPM_WORK_DIR}"
-    rm -rf ${DEB_WORK_DIR} ${RPM_WORK_DIR}
+    #rm -rf ${DEB_WORK_DIR} ${RPM_WORK_DIR}
 
     # Finish
     echo
