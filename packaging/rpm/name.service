@@ -1,5 +1,5 @@
 [Unit]
-Description=Arenadate Gride In-Memory Computing Platform Service
+Description=Arenadata Gride In-Memory Computing Platform Service
 After=syslog.target network.target
 
 [Service]
